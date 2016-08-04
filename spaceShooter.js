@@ -12,11 +12,10 @@ function preload(){
 	// add ship spritsheet
 	game.load.spritesheet('ship', 'humstar.png', 32, 32);
 	// add space alien
-	game.load.spritesheet('baddie', 'alien.png')
-
+	game.load.spritesheet('baddie', 'alien.png');
+	// add bullets
+	game.load.image('bullet', 'shmup-bullet.png');
 }
-
-var aliens;
 
 function create(){
 
@@ -35,11 +34,26 @@ function create(){
     // ship physics 
     game.physics.enable(ship, Phaser.Physics.ARCADE);
     ship.body.drag.set(100);
-    ship.body.maxVelocity.set(200);
+    ship.body.maxVelocity.set(175);
+
+    //create bullets
+    weapon = game.add.weapon(30, 'bullet');
+    //kill bullet on bounds
+    weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;    
+    //bullet speed
+    weapon.bulletSpeed = 600;
+    //bullet fire rate
+    weapon.fireRate = 100;
+    //bullet track ship
+    weapon.trackSprite(ship, 0,0, true);
+   	weapon.enableBody = true;
+   	weapon.physicsBodyType = Phaser.Physics.ARCADE;
+
 
     // create aliens 
     aliens = game.add.group();
     aliens.enableBody = true;
+    aliens.physicsBodyType = Phaser.Physics.ARCADE;
 
     for (var i=0; i<50; i++)
     {
@@ -50,20 +64,27 @@ function create(){
     	s.body.velocity.setTo(10 + Math.random() * 40, 10 + Math.random() * 40);
     }
 
-
+    
 
     //game input
     cursors = game.input.keyboard.createCursorKeys();
 
+    //space bar too shoot
+    fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
 }
 
-function update(){
+function update(){	
+	
+	game.physics.arcade.overlap(weapon, aliens, collisionHandler, null, this);
 
 	//ship navigation
 	if(cursors.up.isDown)
 	{
 		game.physics.arcade.accelerationFromRotation(ship.rotation, 200, ship.body.acceleration);
+	}
+	else if(cursors.down.isDown){
+		game.physics.arcade.accelerationFromRotation(ship.rotation, -100, ship.body.acceleration);
 	}
 	else
 	{
@@ -81,10 +102,15 @@ function update(){
     else
     {
         ship.body.angularVelocity = 0;
+    } 
+
+    if(fireButton.isDown)
+    {
+    	weapon.fire();
     }
 
 
-    //
+    // ship hits the bounds
     ship.body.collideWorldBounds = true;
 
     ship.body.bounce.setTo(0.9, 0.9);
@@ -95,3 +121,8 @@ function render(){
 
 }
 
+function collisionHandler (weapon, aliens){
+	console.log('collision handler');
+	weapon.kill();
+	aliens.kill();
+}
