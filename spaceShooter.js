@@ -17,18 +17,24 @@ function preload(){
 	game.load.image('bullet', 'shmup-bullet.png');
 }
 
-function create(){
+var ship;
+var weapon;
+var aliens;
+var score = 0;
 
+function create(){
+	// add arcade physics
+	game.physics.startSystem(Phaser.Physics.ARCADE);
 	game.renderer.clearBeforeRender = false;
     game.renderer.roundPixels = true;
 
-	// add arcade physics
-	game.physics.startSystem(Phaser.Physics.ARCADE);
 
-	// create space background
+	////// create space background //////
     game.add.tileSprite(0, 0, game.width, game.height, 'space');
 
-    // create ship
+
+
+    ////// create ship //////
     ship = game.add.sprite(game.width/2, game.height/2, 'ship');
     ship.anchor.set(0.5);
     // ship physics 
@@ -36,8 +42,12 @@ function create(){
     ship.body.drag.set(100);
     ship.body.maxVelocity.set(175);
 
-    //create bullets
+
+
+    ////// create bullets //////
     weapon = game.add.weapon(30, 'bullet');
+    weapon.enableBody = true;
+   	game.physics.enable(weapon, Phaser.Physics.ARCADE);   	
     //kill bullet on bounds
     weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;    
     //bullet speed
@@ -46,39 +56,45 @@ function create(){
     weapon.fireRate = 100;
     //bullet track ship
     weapon.trackSprite(ship, 0,0, true);
-   	weapon.enableBody = true;
-   	weapon.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-    // create aliens 
+
+    ////// create aliens //////
     aliens = game.add.group();
-    aliens.enableBody = true;
-    aliens.physicsBodyType = Phaser.Physics.ARCADE;
+    aliens.enableBody = true;  
+    game.physics.enable(aliens, Phaser.Physics.ARCADE);
 
     for (var i=0; i<50; i++)
     {
-    	var s = aliens.create(game.world.randonX, game.world.randomY, 'baddie');
+    	var s = aliens.create(game.world.randomX, game.world.randomY, 'baddie');
     	s.name = 'alien' + s;
     	s.body.collideWorldBounds = true;
     	s.body.bounce.setTo(0.5, 0.5);
-    	s.body.velocity.setTo(10 + Math.random() * 40, 10 + Math.random() * 40);
-    }
+    	s.body.velocity.setTo(20 + Math.random() * 40, 20 + Math.random() * 40);
+    }    
 
-    
-
-    //game input
+    /////// game input //////
     cursors = game.input.keyboard.createCursorKeys();
-
     //space bar too shoot
     fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+
+
+    ////// create score counter //////
+    scoreText = game.add.text(32, 550, 'score: 0', {font: "20px Arial", fill: "#ffffff", align: "left"});
 
 }
 
 function update(){	
-	
-	game.physics.arcade.overlap(weapon, aliens, collisionHandler, null, this);
 
-	//ship navigation
+	//ship collides with aliens
+	game.physics.arcade.collide(aliens, ship);
+	//bullet kills aliens	
+	game.physics.arcade.collide(aliens, weapon.bullets, collisionHandler, null, this);
+
+	ship.body.collideWorldBounds = true;
+    ship.body.bounce.setTo(0.9, 0.9);
+
+	///// ship navigation ///////
 	if(cursors.up.isDown)
 	{
 		game.physics.arcade.accelerationFromRotation(ship.rotation, 200, ship.body.acceleration);
@@ -108,21 +124,15 @@ function update(){
     {
     	weapon.fire();
     }
-
-
-    // ship hits the bounds
-    ship.body.collideWorldBounds = true;
-
-    ship.body.bounce.setTo(0.9, 0.9);
-
 }
 
 function render(){
-
+	game.debug.body(aliens);
+	game.debug.body(weapon);
 }
 
-function collisionHandler (weapon, aliens){
+function collisionHandler (obj1, obj2){
 	console.log('collision handler');
-	weapon.kill();
-	aliens.kill();
+	obj1.kill();
+	obj2.kill();
 }
