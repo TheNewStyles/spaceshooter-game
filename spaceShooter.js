@@ -25,6 +25,8 @@ function preload(){
 	game.load.image('outOfTimeImage', 'space-shooter-time.png');
 	// add you are dead button
 	game.load.image('youAreDeadImage', 'you-are-dead.png');
+	// add you won button
+	game.load.image('youWonImage', 'you-won.png');
 }
 
 var ship;
@@ -65,7 +67,7 @@ function create(){
     //kill bullet on bounds
     weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;     
     //bullet speed
-    weapon.bulletSpeed = 500;
+    weapon.bulletSpeed = 300;
     //bullet fire rate
     weapon.fireRate = 200;
     //bullet track ship
@@ -111,6 +113,10 @@ function create(){
     ////// out of time button //////
    	youAreDeadButton = game.add.button(game.world.centerX - 200, game.world.centerY - 50, 'youAreDeadImage', restart, this);
     youAreDeadButton.visible = false;
+
+    ////// you won button //////
+    youWonButton = game.add.button(game.world.centerX - 200, game.world.centerY - 50, 'youWonImage', restart, this);
+    youWonButton.visible = false;
 }
 
 function update(){		
@@ -129,9 +135,11 @@ function update(){
 	//bullet needs multiple hits to kill enemie ships
 	game.physics.arcade.collide(weapon.bullets, enemies, bulletsHitEnemies, null, this);
 	//kill bullets if they hit the balls
-	game.physics.arcade.collide( weapon.bullets, purpleBalls, bulletsHitsBalls, null, this);
+	game.physics.arcade.collide(weapon.bullets, purpleBalls, bulletsHitsBalls, null, this);
 	//aliens collides with enemy ships
 	game.physics.arcade.collide(aliens, enemies, aliensHitEnemies, null, this);
+	//enemies collides with ship
+	game.physics.arcade.collide(enemies, ship, aliensHitShip, null, this);
 
 	ship.body.collideWorldBounds = true;
     ship.body.bounce.setTo(0.9, 0.9);
@@ -179,7 +187,8 @@ function bulletsHitAliens (obj1, obj2){
 	scoreText.text = 'score: ' + score;
 
 	if(score === 500){
-		alert('You Won!');
+		youWonButton.visible = true;
+		ship.kill();
 	}
 
 	obj1.kill();
@@ -204,7 +213,7 @@ function startGame(){
 	if(clicked === false){		
 		clickToStartButton.visible = false;
 		ship.visible = true;
-		createAliens();	
+		//createAliens();	
 		createEnemies();
 		createPurpleBalls();
 		outOfTime();
@@ -233,14 +242,14 @@ function outOfTime(){
 }
 
 function createAliens(){
-	for (var i=0; i<50; i++)
+	for (var i=0; i<25; i++)
     {
     	var s = aliens.create(game.world.randomX + 200, game.world.randomY, 'baddie');
     	s.name = 'alien' + s;
     	s.body.collideWorldBounds = true;
     	s.body.bounce.setTo(0.8, 0.8);
-    	s.body.velocity.setTo(20 + Math.random() * 40, 20 + Math.random() * 40);
-    	s.body.gravity.y = -1;    	
+    	s.body.velocity.setTo(40 + Math.random() * 40, 40 + Math.random() * 40);
+    	s.body.gravity.y = -5;    	
     }    
 }
 
@@ -249,9 +258,9 @@ function createEnemies(){
 		var s = enemies.create(game.world.randomX + 200, game.world.randomY, 'enemyShip');
 		s.name = 'enemie' + s;
 		s.body.collideWorldBounds = true;
-		s.body.bounce.setTo(0.3, 0.3);
-		s.body.velocity.setTo(20 + Math.random() * 60, 20 + Math.random() * 60);
-		s.body.gravity.y = -5;
+		s.body.bounce.setTo(0.4, 0.4);		
+		s.body.velocity.setTo(30 + Math.random() * 90, 30 + Math.random() * 90);
+		s.body.gravity.y = -5;		
 	}
 }
 
@@ -278,39 +287,22 @@ function bulletsHitsBalls(obj1, obj2){
 	obj1.kill();
 }
 
-function bulletsHitEnemies(obj1, obj2){
-	obj1.kill();
-	//obj2.kill();
+function bulletsHitEnemies(obj1, obj2){	
+	
+	obj2.maxHealth -= 10;	
+
+	console.log(obj1);
+	obj1.kill();	
+
+	if(obj2.maxHealth === 0){
+		obj1.kill();
+		obj2.kill();
+	}
+		
+
 	console.log(obj2);
-	game.debug.body(obj2);
+	// game.debug.body(obj2);
 }
-// function bulletsHitsEnemies(obj1, obj2){
-// 	if(obj2 array postion 0)
-// 	{
-// 		hit count++
-// 		if (hit count === 3){
-// 			killShip;
-// 		}
-// 	}else if (obj2 array postion 1)
-// 	{
-// 		hit count++
-// 		if (hit count === 3){
-// 			killShip;
-// 		}
-// 	}else if (obj2 array postion 2)
-// 	{
-// 		hit count++
-// 		if (hit count === 3){
-// 			killShip;
-// 		}
-// 	}else if (obj2 array postion 3)
-// 	{
-// 		hit count++
-// 		if (hit count === 3){
-// 			killShip;
-// 		}
-// 	}
-// }
 
 function aliensHitEnemies(obj1,obj2){
 	obj1.body.bounce.setTo(0.9, 0.9);
@@ -320,6 +312,7 @@ function aliensHitEnemies(obj1,obj2){
 function restart(){		
 	outOfTimeButton.visible = false;	
 	youAreDeadButton.visible = false;
+	youWonButton.visible = false;
 	ship.revive();	
 	ship.x = 50;
 	ship.y = game.height/2;
