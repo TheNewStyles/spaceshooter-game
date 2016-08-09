@@ -34,6 +34,7 @@ var weapon;
 var aliens;
 var score = 0;
 var scoreText;
+var winScore = 350;
 var lives = 3;
 var livesText;
 var timeLeftCounterSeconds = 60;
@@ -133,7 +134,7 @@ function update(){
 	//bullet kills on hit aliens	
 	game.physics.arcade.collide(weapon.bullets, aliens, bulletsHitAliens, null, this);
 	//bullet needs multiple hits to kill enemie ships
-	game.physics.arcade.collide(weapon.bullets, enemies, bulletsHitEnemies, null, this);
+	game.physics.arcade.overlap(weapon.bullets, enemies, bulletsHitEnemies, null, this);
 	//kill bullets if they hit the balls
 	game.physics.arcade.collide(weapon.bullets, purpleBalls, bulletsHitsBalls, null, this);
 	//aliens collides with enemy ships
@@ -182,13 +183,17 @@ function render(){
     // game.debug.body(weapon);
 }
 
+function showYouWon(){
+	youWonButton.visible = true;
+	ship.kill();
+}
+
 function bulletsHitAliens (obj1, obj2){ 	
 	score += 10;
 	scoreText.text = 'score: ' + score;
 
-	if(score === 500){
-		youWonButton.visible = true;
-		ship.kill();
+	if(score === winScore){
+		showYouWon();
 	}
 
 	obj1.kill();
@@ -213,7 +218,7 @@ function startGame(){
 	if(clicked === false){		
 		clickToStartButton.visible = false;
 		ship.visible = true;
-		//createAliens();	
+		createAliens();	
 		createEnemies();
 		createPurpleBalls();
 		outOfTime();
@@ -289,19 +294,20 @@ function bulletsHitsBalls(obj1, obj2){
 
 function bulletsHitEnemies(obj1, obj2){	
 	
-	obj2.maxHealth -= 10;	
-
-	console.log(obj1);
-	obj1.kill();	
+	obj2.maxHealth -= 10;
+	obj1.kill();		
 
 	if(obj2.maxHealth === 0){
 		obj1.kill();
 		obj2.kill();
-	}
-		
 
-	console.log(obj2);
-	// game.debug.body(obj2);
+		score += 25;
+		scoreText.text = 'score: ' + score;
+
+		if(score === winScore){
+			showYouWon();
+		}
+	}	
 }
 
 function aliensHitEnemies(obj1,obj2){
