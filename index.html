@@ -5,69 +5,108 @@
 	<title>Tyler Peterson's HTML5 game</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	
-	<!-- fonts/icons -->
-	<link href='http://fonts.googleapis.com/css?family=Lato:300,700' rel='stylesheet'>
-	<link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=entypo">
-	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,900' rel='stylesheet'> 
+	  <!-- favicon -->
+	  <link rel="shortcut icon" href="../../images/logos/Space-Shooter.png">  
+	  <!-- custom css -->
+	  <link rel="stylesheet" type="text/css" href="../../portfolio.css">
+	  <!-- social icons -->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	  <!-- dev icons -->
+	  <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+	  <!-- bootstrap -->
+	  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	  <!-- jquery -->
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- phaser engine -->
+   <script src="../../js/phaser.min.js" ></script> 
 
-	<!-- stylesheets -->
-	<link rel="stylesheet" href="style.css"/>	
-
-	<!-- favicon -->
-	<!-- <link rel="shortcut icon" href="../img/logo-nobackground.png"> -->
-	
-	 <!-- javascript -->
-	 <script src="phaser.min.js" ></script>	
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-	 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-	 <script src="spaceShooter.js" async></script>
+	  <!-- custom javascript -->
+	  <script type="text/javascript" src="../../js/portfolio.js" ></script>
+	  <script src="../../js/spaceShooter.js" ></script>
+	 
 
 </head>
 
+<!-- Nav Menu   -->
+    <div class="fixed-nav-bar">    
+      <span id="hamburger" class="fa fa-bars fa-3x col-md-1 col-md-offset-11 col-xs-3 col-xs-offset-9" onclick="openNav()"></span>  
+      <nav id="nav" class="overlay">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content">
+          <a href="../../index.html" onclick="closeNav()">Home</a>
+          <a href="../../index.html#contact" onclick="closeNav()">Contact</a>
+          <a href="../../index.html#portfolio" onclick="closeNav()">Portfolio</a>
+          <a href="../../projects/resume/resume.html" onclick="closeNav()">Resume</a>
+        </div>
+      </nav>
+    </div>
+<!-- End of Nav -->
 	
-    <body>			
-	  <nav class="clearfix">
-	    <ul class="clearfix">
-	        <li><a href="../index.html">Home</a></li>
-	        <li><a href="../index.html#welcome">Work</a></li>
-	        <li><a href="#">About</a></li>	        
-	    </ul>	    
-	   <button class="hamburger hamburger--collapse" type="button" id="pull">
-		  <span class="hamburger-box">
-		    <span class="hamburger-inner"></span>
-		  </span>
-		</button>  
-	  </nav>
-			
-	<div class="work-display">
-		
-			<h1>Space Shooter</h1>
-			<hr>			
-			<span class="grid-2">Space shooter game created with Phaser game engine. Kill the aliens and their ships before the time is up to win!</span>
-			<div id="spaceShooter" class="grid-4"></div>
-		
+<body class="container-fluid">			
 
-		<!-- Social buttons -->
-		<div class="grid-6">						
-			  <div class="contact">
-			  	<a href="https://github.com/TheNewStyles">	
-			  		<div class="social">&#62208</div>	
-			  	</a>
-			  	<a href="https://www.linkedin.com/in/tyler-peterson-40717192">	
-					<div class="social">&#62232;</div>	
-			  	</a>			        		  		
-				<a href="mailto:tyler.peterson@utah.edu">
-					<div class="social">&#9993;</div>
-				</a>		
-	      </div>
-		</div>		
+  <!-- Back to top -->
+	<a href="#" class="back-to-top">Back To Top</a>
+  
+	<div class="inner-wrap">
+		<h1 class="padding-top">Space Shooter Game</h1>
+    <hr class="col-xs-10 col-xs-offset-1">  
+		<div class="row">										
+			<p class="col-lg-8 col-lg-offset-2">Space shooter game created with Phaser game engine. Kill the aliens and their ships before the time is up to win!
+      <br>
+			<br>						
+			Use the &larr; , &uarr; , &rarr;, and, &darr; buttons to navigate.
+			<br>
+			Use SPACEBAR to shoot.
+			<br>
+			UFOs take multiple hits to destory.			
+      <br>
+      <br>
+      <i>if the game is not loaded please refresh the page. <br> This game is not optimized for mobile.. yet.</i>
+
+			</p>				
+
+			<div class="col-lg-8 col-lg-offset-2">
+        <div id="spaceShooter"></div>
+      </div>		
 			
-			
-		<!--Footer-->
-		<footer class="center">
-			<hr>
-			<span>&copy; Tyler Peterson 2016</span>
-		</footer>	 	
-	</div> <!--End of work-display-->
+		</div>
+		
+            <footer class="col-md-12">           
+              <section class="row">
+                <div class="col-lg-12">                
+                    <div class="social">
+                      <a href="https://github.com/TheNewStyles" target="_blank">        
+                          <div class="social-icons">
+                            <div class="fa fa-github"></div>
+                          </div>               
+                      </a>
+                      <a href="https://www.linkedin.com/in/tyler-peterson-40717192" target="_blank">        
+                          <div class="social-icons entypo-linkedin">
+                            <div class="fa fa-linkedin"></div>
+                          </div>        
+                      </a>
+                      <a href="mailto:tyler.peterson@utah.edu" target="_blank">        
+                          <div class="social-icons">
+                            <div class="fa fa-envelope"></div>
+                          </div>        
+                      </a>
+                      <a href="https://www.behance.net/docpetersoaa2d">        
+                          <div class="social-icons">
+                            <div class="fa fa-behance"></div>
+                          </div>        
+                      </a> 
+                      <a href="http://codepen.io/TheNewStyles/">     
+                          <div class="social-icons">
+                            <div class="fa fa-codepen"></div>
+                          </div>        
+                      </a>
+                    </div>
+                </div>    
+              </section> <!--  end social   -->            
+           <div><i class="fa fa-copyright"></i>Tyler Peterson All Rights Reserved</div>
+          </footer> <!--  end footer   --> 
+
+          
+	</div> <!--End of inner wrap-->
 </body>
 </html>
