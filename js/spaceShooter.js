@@ -8,25 +8,25 @@ function preload(){
 	game.scale.pageAlignVertically = true;
 
 	// add space background 
-	game.load.image('space', 'SpaceBackground.png');
+	game.load.image('space', 'images/SpaceBackground.png');
 	// add ship spritsheet
-	game.load.spritesheet('ship', 'humstar.png', 32, 32);
+	game.load.spritesheet('ship', 'images/humstar.png', 32, 32);
 	// add space alien
-	game.load.spritesheet('baddie', 'alien.png');
+	game.load.spritesheet('baddie', 'images/alien.png');
 	// add bullets
-	game.load.image('bullet', 'shmup-bullet.png');
+	game.load.image('bullet', 'images/shmup-bullet.png');
 	// add purple ball
-	game.load.image('purpleBall', 'purple_ball.png');
+	game.load.image('purpleBall', 'images/purple_ball.png');
 	// add enemy ship
-	game.load.image('enemyShip', 'enemy-ship.png');
+	game.load.image('enemyShip', 'images/enemy-ship.png');
 	// add click to start button
-	game.load.image('clickToStartImage', 'click-to-start.png');
+	game.load.image('clickToStartImage', 'images/click-to-start.png');
 	// add out of time button 
-	game.load.image('outOfTimeImage', 'space-shooter-time.png');
+	game.load.image('outOfTimeImage', 'images/space-shooter-time.png');
 	// add you are dead button
-	game.load.image('youAreDeadImage', 'you-are-dead.png');
+	game.load.image('youAreDeadImage', 'images/you-are-dead.png');
 	// add you won button
-	game.load.image('youWonImage', 'you-won.png');
+	game.load.image('youWonImage', 'images/you-won.png');
 }
 
 var ship;
