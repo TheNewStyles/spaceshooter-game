@@ -206,6 +206,7 @@ function aliensHitShip (obj1, obj2){
 
 	if(lives === 0){
 		youAreDeadButton.visible = true;
+		weapon.fireRate = 999999;
 		aliens.removeAll();
 		ship.kill();
 		enemies.removeAll();
@@ -315,11 +316,12 @@ function aliensHitEnemies(obj1,obj2){
 	obj2.body.bounce.setTo(0.9, 0.9);
 }
 
-function restart(){		
+function restart(){	
 	outOfTimeButton.visible = false;	
 	youAreDeadButton.visible = false;
 	youWonButton.visible = false;
-	ship.revive();	
+	ship.revive();
+	weapon.fireRate = 200;	
 	ship.x = 50;
 	ship.y = game.height/2;
 	createAliens();	
