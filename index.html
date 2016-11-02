@@ -6,15 +6,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	
 	  <link rel="stylesheet" type="text/css" href="styles.css">
-      <!-- bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Megrim|Roboto+Slab" rel="stylesheet">
+  
 </head>
 
 
 	
 <body>			
-    
+  
   <header>
     <!-- Nav Menu   -->
       <div class="fixed-nav-bar">    
@@ -30,25 +32,30 @@
       </div>
   </header> 
     
+  <div class="title-info">
+    <div class="inner-title">
+    <h1>Space Shooter Game</h1>
+      <p>Space shooter game created with Phaser game engine. Kill the aliens and their ships before the time is up to win!
+      <br>
+      <br>            
+      Use the &larr; , &uarr; , &rarr;, and, &darr; buttons to navigate.
+      <br>
+      Use SPACEBAR to shoot.
+      <br>
+      UFOs take multiple hits to destory.     
+      <br>
+      <br>
+      <i><!-- if the game is not loaded please refresh the page. <br> --> This game is not optimized for mobile.. yet.</i>
+    </div>
+  </div>
 
-		<h1>Space Shooter Game</h1>
-		<div>										
-			<p>Space shooter game created with Phaser game engine. Kill the aliens and their ships before the time is up to win!
-      <br>
-			<br>						
-			Use the &larr; , &uarr; , &rarr;, and, &darr; buttons to navigate.
-			<br>
-			Use SPACEBAR to shoot.
-			<br>
-			UFOs take multiple hits to destory.			
-      <br>
-      <br>
-      <i>if the game is not loaded please refresh the page. <br> This game is not optimized for mobile.. yet.</i>
 
 			</p>				
 
-			<div>
-        <div id="spaceShooter"></div>
+			<div class="canvas">
+        <div class="inner-canvas">
+          <div id="spaceShooter"></div>
+        </div>        
       </div>		
 			
 		</div>
@@ -57,5 +64,7 @@
   <script src="js/phaser.min.js" ></script> 
   <!-- custom javascript -->
   <script src="js/spaceShooter.js" ></script>
+
+
 </body>
 </html>
