@@ -1,4 +1,4 @@
-var game = new Phaser.Game(500	, 400, Phaser.CANVAS, 'spaceShooter', { 
+var game = new Phaser.Game(500, 400, Phaser.CANVAS, 'spaceShooter', { 
 	preload: preload, create: create, update: update, render: render });
 
 
